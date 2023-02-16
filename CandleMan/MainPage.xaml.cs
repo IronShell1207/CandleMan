@@ -40,6 +40,8 @@ namespace CandleMan
         private List<CandleModel> Candlles = new List<CandleModel>();
 
         public double Val { get; set; } = 100;
+        public string Timing { get; set; } = "1h";
+        public string ErrorCode { get; set; } = "";
         public List<List<double>> Prices { get; set; } = new List<List<double>>();
 
         private void UpdateGraph()
@@ -119,18 +121,30 @@ namespace CandleMan
 
         private async Task GetData()
         {
-            RestClient clci = new RestClient();
-            RestRequest req = new RestRequest($"https://api4.binance.com/api/v3/klines?symbol={Pair}&interval=1h");
-            RestResponse RESP = await clci.GetAsync(req);
-            if (RESP.IsSuccessful)
+            try
             {
-                JsonReader read = new JsonTextReader(new StringReader(RESP.Content));
-                var serial = JsonSerializer.Create();
-                Prices = serial.Deserialize<List<List<double>>>(read);
-                int pos = 0;
-                double maxvalue = Prices.Max(x => x[2]);
-                MaxVal = 50000 / maxvalue;
-                UpdateGraph();
+                RestClient clci = new RestClient();
+                RestRequest req =
+                    new RestRequest($"https://api4.binance.com/api/v3/klines?symbol={Pair}&interval={Timing}");
+                RestResponse RESP = await clci.GetAsync(req);
+                if (RESP.IsSuccessful)
+                {
+                    JsonReader read = new JsonTextReader(new StringReader(RESP.Content));
+                    var serial = JsonSerializer.Create();
+                    Prices = serial.Deserialize<List<List<double>>>(read);
+                    int pos = 0;
+                    double maxvalue = Prices.Max(x => x[2]);
+                    MaxVal = 50000 / maxvalue;
+                    UpdateGraph();
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorCode = ex.Message;
+                Bindings.Update();
+                PopaGrid.Visibility = Visibility.Visible;
+                await Task.Delay(2500);
+                PopaGrid.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -150,7 +164,6 @@ namespace CandleMan
             await GetData();
 
         }
-
 
 
         private void RangeBase_OnValueChanged(object sender, RangeBaseValueChangedEventArgs e)

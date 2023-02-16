@@ -10,8 +10,12 @@
     d:DesignWidth="400">
 
     <Grid>
-        <Rectangle Width="3" Fill="Green" x:Name="ShadowRect" VerticalAlignment="Top"/>
-        <Rectangle Width="20"  VerticalAlignment="Top" x:Name="BodyRect">
+        <Rectangle Width="3"  Opacity="0.7" x:Name="ShadowRect" VerticalAlignment="Top">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="{x:Bind FillColor, Mode=TwoWay}"></SolidColorBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle Width="20" MinHeight="2" VerticalAlignment="Top" x:Name="BodyRect">
             <Rectangle.Fill>
                 <SolidColorBrush Color="{x:Bind FillColor, Mode=TwoWay}"></SolidColorBrush>
             </Rectangle.Fill>

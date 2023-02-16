@@ -14,7 +14,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace CandleMan
 {
@@ -38,7 +37,7 @@ namespace CandleMan
             double shadowHeight = (CandelModel.HighPrice - CandelModel.LowPrice) * CandelModel.Mass;
             double bodyHeight = (Math.Abs(CandelModel.OpenPrice - CandelModel.ClosePrice)) *CandelModel.Mass;
             double verticalOffset = CandelModel.OpenPrice < CandelModel.ClosePrice ? CandelModel.HighPrice - CandelModel.ClosePrice : CandelModel.HighPrice - CandelModel.OpenPrice;
-            FillColor = CandelModel.OpenPrice < CandelModel.ClosePrice ? Color.FromArgb(200, 0, 255, 24) : Color.FromArgb(200, 255, 0, 25);
+            FillColor = CandelModel.OpenPrice < CandelModel.ClosePrice ? Color.FromArgb(255, 0, 255, 24) : Color.FromArgb(255, 255, 0, 25);
             ShadowRect.Height = shadowHeight;
             BodyRect.Height = Math.Abs(bodyHeight);
             BodyTrans.TranslateY = verticalOffset * CandelModel.Mass;
