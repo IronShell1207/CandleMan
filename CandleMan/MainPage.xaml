@@ -67,11 +67,12 @@
         <Grid
             Width="50"
             Height="500"
+            Margin="10,0"
             Padding="10,20"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
             Background="#55aaaaaa"
-            CornerRadius="10 0 0 10">
+            CornerRadius="10 10 10 10">
             <Slider
                 x:Name="MySlide"
                 HorizontalAlignment="Center"
