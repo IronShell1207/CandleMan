@@ -1,0 +1,90 @@
+﻿<Page
+    x:Class="CandleMan.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:CandleMan"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+
+    <Grid>
+        <ScrollViewer
+            x:Name="MainScroller"
+            HorizontalScrollBarVisibility="Visible"
+            HorizontalScrollMode="Enabled"
+            MaxZoomFactor="333"
+            MinZoomFactor="0.1"
+            VerticalScrollBarVisibility="Visible"
+            VerticalScrollMode="Enabled"
+            ZoomMode="Enabled">
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Rectangle
+                    x:Name="rectd"
+                    Width="40"
+                    Height="10"
+                    Fill="#3A30144a" />
+                <Canvas x:Name="MainCanvas" />
+            </Grid>
+        </ScrollViewer>
+        <Grid
+            Height="30"
+            Padding="10,5"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Background="#55aaaaaa"
+            CornerRadius="10 10 0 0">
+            <TextBlock Text="{Binding ElementName=MainScroller, Path=ZoomFactor}" />
+        </Grid>
+        <Grid
+            Width="50"
+            Height="500"
+            Padding="10,20"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            Background="#55aaaaaa"
+            CornerRadius="10 0 0 10">
+            <Slider
+                x:Name="MySlide"
+                HorizontalAlignment="Center"
+                Maximum="{x:Bind MaxVal, Mode=OneWay}"
+                Minimum="1" PointerCaptureLost="MySlide_OnPointerCaptureLost"
+                Orientation="Vertical"
+                PointerReleased="MySlide_OnPointerReleased"
+                StepFrequency="0.1"
+                ValueChanged="RangeBase_OnValueChanged"
+                Value="{x:Bind Val, Mode=TwoWay}" />
+        </Grid>
+        <Grid
+            Height="50"
+            MinWidth="50"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Background="#55ffffff"
+            CornerRadius="10 0 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="50" />
+            </Grid.ColumnDefinitions>
+            <TextBox
+                MinWidth="200"
+                Margin="10,5"
+                Padding="8"
+                Background="Transparent"
+                BorderBrush="#44ffffff"
+                BorderThickness="1"
+                CornerRadius="10"
+                Text="{x:Bind Pair, Mode=TwoWay}" />
+            <Button
+                Grid.Column="1"
+                Margin="0"
+                Padding="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Command="{x:Bind UpdateCommand, Mode=OneWay}"
+                CornerRadius="10">
+                <SymbolIcon Symbol="Rotate" />
+            </Button>
+        </Grid>
+    </Grid>
+</Page>
